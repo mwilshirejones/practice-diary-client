@@ -1,10 +1,26 @@
 <script>
-	export let name;
+  /* TODO: Move routing to a component */
+  let location = window.location.pathname
+
+  let setLocation = loc => location = loc
+    
+  let goTo = loc => {
+    location = loc
+    window.history.pushState({}, null, location)
+  }
 </script>
 
+<svelte:window on:popstate={() => setLocation(window.location.pathname)} />
+
 <main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+	<h1>My Practice Diary</h1>
+
+  <!-- TODO: Replace with log in -->
+  {#if location === '/'}
+    <p>Go to my <a href="/objectives" on:click|preventDefault={() => goTo('/objectives')}>objectives</a>.</p>
+  {:else if location === '/objectives'}
+    <p>Hello</p>
+  {/if}
 </main>
 
 <style>
