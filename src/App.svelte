@@ -1,4 +1,6 @@
 <script>
+  import Diary from './Diary/Diary.svelte'
+
   /* TODO: Move routing to a component */
   let location = window.location.pathname
 
@@ -12,16 +14,16 @@
 
 <svelte:window on:popstate={() => setLocation(window.location.pathname)} />
 
-<main>
-	<h1>My Practice Diary</h1>
+<!-- TODO: Replace with log in -->
+{#if location === '/'}
+  <main>
+    <h1>Practice Diary</h1>
 
-  <!-- TODO: Replace with log in -->
-  {#if location === '/'}
-    <p>Go to my <a href="/objectives" on:click|preventDefault={() => goTo('/objectives')}>objectives</a>.</p>
-  {:else if location === '/objectives'}
-    <p>Hello</p>
-  {/if}
-</main>
+    <p>Go to <a href="/diary" on:click|preventDefault={() => goTo('/diary')}>your diary</a>.</p>
+  </main>
+{:else if location === '/diary'}
+  <Diary />
+{/if}
 
 <style>
 	main {

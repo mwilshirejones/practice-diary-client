@@ -8,15 +8,13 @@ createServer({
     this.get(
       '/objectives',
       () => {
-        return {
-          objectives: [
-            { id: 1, name: 'Objective 1' },
-            { id: 2, name: 'Objective 2' },
-          ]
-        }
+        return [
+          { id: 1, name: 'Objective 1', practice_sessions: [] },
+          { id: 2, name: 'Objective 2', practice_sessions: [] },
+        ]
       },
       // Slower server response
-      { timing: 4000 }
+      { timing: 1000 }
     )
   }
 })
