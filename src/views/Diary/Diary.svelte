@@ -12,10 +12,21 @@
     objectives = await response.json()
     loading = false
   })
+
+  let selectedObjective = null
+  let editingObjective = false
+
+  let editObjective = id => {
+    if (id) selectedObjective = id
+
+    editingObjective = true
+  }
 </script>
 
 <main>
   <h1>Diary</h1>
+
+  <a href="/objective/new" on:click|preventDefault={() => goTo('/objective/new')}>Add a new objective</a>
 
   {#if loading}
     <p>Loading objectives...</p>
