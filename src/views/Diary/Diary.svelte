@@ -1,31 +1,19 @@
 <script>
-  import { onMount } from 'svelte'
+  import { Route } from '../../components/Router'
 
-  let objectives = []
-  let loading = true
-
-  onMount(async () => {
-    const response = await fetch('api/objectives')
-
-    if (!response.ok) throw new Error(response.status)
-
-    objectives = await response.json()
-    loading = false
-  })
+  import Objective from './components/Objective'
+  import ObjectivesNav from './components/ObjectivesNav'
+  import PracticeSession from './components/PracticeSession'
 </script>
 
 <main>
-  <h1>Diary</h1>
+  <h1>My practice diary</h1>
 
-  {#if loading}
-    <p>Loading objectives...</p>
-  {:else}
-    <ul>
-      {#each objectives as objective (objective.id)}
-        <li>{objective.name}</li>  
-      {/each}
-    </ul>
-  {/if}
+  <ObjectivesNav />
+
+  <Route match="/diary">Inspiring quote lol</Route>
+  <Route contains="/diary/objective"><Objective /></Route>
+  <Route contains="/diary/practice-session"><PracticeSession /></Route>
 </main>
 
 <style>

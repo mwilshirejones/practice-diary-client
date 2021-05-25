@@ -3,7 +3,7 @@
 </script>
 
 <main>
-  <h1>Practice Diary</h1>
+  <h1>Ollo!</h1>
 
   <!-- TODO: Log in -->
   <p>Go to <Link href='diary'>your diary</Link>.</p>
