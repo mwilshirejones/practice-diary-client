@@ -21,7 +21,7 @@
   <nav>
     <ul>
       {#each objectives as objective (objective.id)}
-        <li><Link href={`objective/${objective.id}`}>{objective.name}</Link></li>  
+        <li><Link href={`/diary/objective/${objective.id}`}>{objective.name}</Link></li>  
       {/each}
     </ul>
   </nav>
