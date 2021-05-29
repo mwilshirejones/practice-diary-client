@@ -1,6 +1,15 @@
 <script>
-  // TODO: get id from URL
-  let id
+  import { getUrlParams } from '../../../../components/Router/helpers.js'
+
+  export let location = ''
+  let id = null
+
+  $: {
+    // FIXME: Use named params somehow, e.g. /objective/:id
+    //        or pass id down from parent 
+    let urlParams = getUrlParams(location)
+    id = urlParams[urlParams.length - 1]
+  }
 </script>
 
 <article>

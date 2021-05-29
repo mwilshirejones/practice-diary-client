@@ -12,8 +12,12 @@
   <ObjectivesNav />
 
   <Route match="/diary">Inspiring quote lol</Route>
-  <Route contains="/diary/objective"><Objective /></Route>
-  <Route contains="/diary/practice-session"><PracticeSession /></Route>
+  <Route contains="/diary/objective" let:location={location}>
+    <Objective location={location} />
+  </Route>
+  <Route contains="/diary/practice-session" let:location={location}>
+    <PracticeSession location={location} />
+  </Route>
 </main>
 
 <style>

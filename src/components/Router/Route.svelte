@@ -16,5 +16,5 @@
 </script>
 
 {#if doesRouteMatch}
-  <slot></slot>
+  <slot location={$location}></slot>
 {/if}
