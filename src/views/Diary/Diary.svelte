@@ -7,17 +7,20 @@
 </script>
 
 <main>
-  <h1>My practice diary</h1>
+  <Route match="/diary">
+    <h1>My practice diary</h1>
+    <p>Inspiring quote lol</p>
+  </Route>
 
-  <ObjectivesNav />
-
-  <Route match="/diary">Inspiring quote lol</Route>
   <Route contains="/diary/objective" let:location={location}>
     <Objective location={location} />
   </Route>
+
   <Route contains="/diary/practice-session" let:location={location}>
     <PracticeSession location={location} />
   </Route>
+
+  <ObjectivesNav />
 </main>
 
 <style>

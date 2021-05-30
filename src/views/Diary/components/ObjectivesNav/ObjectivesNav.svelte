@@ -24,8 +24,11 @@
         <li><Link href={`/diary/objective/${objective.id}`}>{objective.name}</Link></li>  
       {/each}
     </ul>
+
+    <Link href="/diary/objective">Create a new objective</Link>
   </nav>
 {/if}
+
 
 <style>
 </style>

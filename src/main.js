@@ -25,6 +25,29 @@ createServer({
     )
 
     this.get(
+      '/objectives/1',
+      () => {
+        return { 
+          id: 1, 
+          name: 'Objective 1', 
+          practice_sessions: [
+            { id: 1, name: 'Practice session 1' },
+            { id: 2, name: 'Practice session 2' },
+          ],
+        }
+      },
+      { timing: 1000 },
+    )
+
+    this.get(
+      '/objectives/2',
+      () => {
+        return { id: 2, name: 'Objective 2', practice_sessions: [] }
+      },
+      { timing: 1000 },
+    )
+
+    this.get(
       '/objectives/1/practice_sessions',
       () => {
         return [
