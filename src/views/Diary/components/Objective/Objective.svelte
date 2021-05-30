@@ -1,15 +1,19 @@
 <script>
+  import { Link } from '../../../../components/Router'
   import { getUrlParams } from '../../../../components/Router/helpers.js'
 
   export let location = ''
   let id = null
 
-  $: {
-    // FIXME: Use named params somehow, e.g. /objective/:id
-    //        or pass id down from parent 
-    let urlParams = getUrlParams(location)
-    id = urlParams[urlParams.length - 1]
+  function setId(loc) {
+    // TODO: Use named params somehow, e.g. /objective/:id
+    const urlParams = getUrlParams(loc)
+    const lastParam = urlParams[urlParams.length - 1]
+
+    if (lastParam !== 'objective') id = lastParam
   }
+
+  $: setId(location)
 </script>
 
 <article>
