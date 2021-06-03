@@ -1,16 +1,13 @@
 <script>
   import { onMount } from 'svelte'
   import { Link } from '../../../../components/Router'
+  import { fetchObjectives } from '../../http/objectives'
 
   let objectives = []
   let loading = true
 
   onMount(async () => {
-    const response = await fetch('/api/objectives')
-
-    if (!response.ok) throw new Error(response.status)
-
-    objectives = await response.json()
+    objectives = await fetchObjectives()
     loading = false
   })
 </script>

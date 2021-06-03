@@ -2,6 +2,9 @@
   import { Link } from '../../../../components/Router'
   import { getUrlParams } from '../../../../components/Router/helpers.js'
 
+  import { fetchObjective } from '../../http/objectives'
+  import { fetchPracticeSessions } from '../../http/practice-sessions'
+
   import ObjectiveForm from '../ObjectiveForm'
 
   export let location = ''
@@ -29,26 +32,6 @@
     id = lastParam
   }
 
-  // TODO: Create `api` folder for shared requests
-  async function fetchObjective(objectiveId) {
-    const response = await fetch(`/api/objectives/${objectiveId}`)
-
-    if (!response.ok) throw new Error(response.status)
-
-    objective = await response.json()
-    loadingObjective = false
-  }
-
-  // TODO: Use async/await svelte templating
-  async function fetchPracticeSessions(objectiveId) {
-    const response = await fetch(`/api/objectives/${objectiveId}/practice_sessions`)
-
-    if (!response.ok) throw new Error(response.status)
-
-    practiceSessions = await response.json()
-    loadingPracticeSessions = false
-  }
-
   $: {
     setId(location)
 
@@ -58,8 +41,14 @@
     practiceSessions = []
     loadingPracticeSessions = true
   }
-  $: if (id) fetchObjective(id)
-  $: if (id) fetchPracticeSessions(id)
+
+  $: if (id) (async () => {
+    objective = await fetchObjective(id)
+    loadingObjective = false
+
+    practiceSessions = await fetchPracticeSessions(id)
+    loadingPracticeSessions = false
+  })()
 </script>
 
 <article>
