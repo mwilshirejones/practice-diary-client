@@ -24,6 +24,13 @@ createServer({
       { timing: 1000 },
     )
 
+    this.post(
+      '/objectives',
+      (_, request) => {
+        console.log({ request })
+      },
+    )
+
     this.get(
       '/objectives/1',
       () => {
@@ -37,6 +44,13 @@ createServer({
         }
       },
       { timing: 1000 },
+    )
+
+    this.patch(
+      '/objectives/1',
+      (_, request) => {
+        console.log({ request })
+      },
     )
 
     this.get(
