@@ -1,9 +1,11 @@
 <script>
+  import isEmpty from 'lodash/isEmpty'
+
   import { Link } from '../../../../components/Router'
   import { getUrlParams } from '../../../../components/Router/helpers.js'
 
-  import { fetchObjective } from '../../http/objectives'
   import { fetchPracticeSessions } from '../../http/practice-sessions'
+  import { objectives } from '../../stores/objectives'
 
   import ObjectiveForm from '../ObjectiveForm'
 
@@ -14,6 +16,7 @@
   let practiceSessions = []
   let loadingPracticeSessions = true
   let isEditing = false
+  let isNew = false
 
   function toggleEdit() {
     isEditing = !isEditing
@@ -42,20 +45,24 @@
     loadingPracticeSessions = true
   }
 
-  $: if (id) (async () => {
-    objective = await fetchObjective(id)
+  $: if (id) {
+    objective = $objectives.find(obj => obj.id == id) || {}
     loadingObjective = false
+  }
 
+  $: if (id) (async () => {
     practiceSessions = await fetchPracticeSessions(id)
     loadingPracticeSessions = false
   })()
+
+  $: isNew = isEmpty(objective)
 </script>
 
 <article>
   {#if id}
     {#if loadingObjective}
       <p>Loading objective...</p>
-    {:else if isEditing}
+    {:else if isEditing || isNew}
       <ObjectiveForm objective={objective} toggleEdit={toggleEdit} />
     {:else}
       <h1>{objective.name}</h1> 
