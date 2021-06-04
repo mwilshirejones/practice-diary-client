@@ -1,24 +1,26 @@
 <script>
   import { patchObjective } from '../../http/objectives'
+  import { objectives } from '../../stores/objectives'
 
   export let objective = null
   export let toggleEdit = null
 
+  let saving = false
   let values = { ...objective }
-  values.isChecked = false
 
   async function onSubmit({ target: form }) {
     // FIXME: Don't want all the values if patching...
     //        Only get values from the form...
+    // TODO: Determine if post or patch
     const { id, ...restValues } = values
 
+    saving = true
+
     const response = await patchObjective(id, restValues)
-    console.log({ response })
+    objectives.updateItem(response)
 
-    // TODO: Update objective store
-
-    // objective = await response.json()
-    // loadingObjective = false
+    saving = false
+    toggleEdit()
   }
 </script>
 
@@ -27,9 +29,8 @@
 
   <form on:submit|preventDefault={onSubmit}>
     <input type="text" name="name" bind:value={values.name} />
-    <input type="checkbox" name="isChecked" bind:checked={values.isChecked} />
 
-    <button type="submit">Save objective</button>
+    <button type="submit">{ saving ? 'Saving...' : 'Save objective' }</button>
   </form>
 
   <button on:click={toggleEdit} type="button">Cancel</button>
