@@ -1,6 +1,4 @@
 <script>
-  import isEmpty from 'lodash/isEmpty'
-
   import { Link } from '../../../../components/Router'
   import { getUrlParams } from '../../../../components/Router/helpers.js'
 
@@ -16,7 +14,6 @@
   let practiceSessions = []
   let loadingPracticeSessions = true
   let isEditing = false
-  let isNew = false
 
   function toggleEdit() {
     isEditing = !isEditing
@@ -54,15 +51,13 @@
     practiceSessions = await fetchPracticeSessions(id)
     loadingPracticeSessions = false
   })()
-
-  $: isNew = isEmpty(objective)
 </script>
 
 <article>
   {#if id}
     {#if loadingObjective}
       <p>Loading objective...</p>
-    {:else if isEditing || isNew}
+    {:else if isEditing}
       <ObjectiveForm objective={objective} toggleEdit={toggleEdit} />
     {:else}
       <h1>{objective.name}</h1> 

@@ -16,6 +16,24 @@ export async function fetchObjective(objectiveId) {
   return objective
 }
 
+export async function postObjective(data) {
+  const response = await fetch(
+    '/api/objectives',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    }
+  )
+
+  if (!response.ok) throw new Error(response.status)
+
+  const objective = await response.json()
+  return objective
+}
+
 export async function patchObjective(objectiveId, data) {
   const response = await fetch(
     `/api/objectives/${objectiveId}`,

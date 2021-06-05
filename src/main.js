@@ -32,7 +32,15 @@ createServer({
     this.post(
       '/objectives',
       (_, request) => {
-        console.log({ request })
+        const data = JSON.parse(request.requestBody)
+
+        const lastId = objectives[objectives.length - 1].id
+        objectives.push({
+          ...data,
+          id: lastId + 1,
+        })
+
+        return objectives[objectives.length - 1]
       },
     )
 
