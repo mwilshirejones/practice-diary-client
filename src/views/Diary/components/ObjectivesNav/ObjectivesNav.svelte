@@ -4,6 +4,7 @@
 </script>
 
 <nav>
+  <!-- TODO: Skeleton -->
   {#if $objectives.length}
     <ul>
       {#each $objectives as objective (objective.id)}
@@ -14,7 +15,6 @@
 
   <Link href="/diary/objective">Create a new objective</Link>
 </nav>
-
 
 <style>
 </style>

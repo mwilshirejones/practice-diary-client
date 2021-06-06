@@ -1,4 +1,6 @@
 <script>
+  import isEmpty from 'lodash/isEmpty'
+
   import { Link } from '../../../../components/Router'
   import { getUrlParams } from '../../../../components/Router/helpers.js'
 
@@ -8,11 +10,11 @@
   import ObjectiveForm from '../ObjectiveForm'
 
   export let location = ''
+  export let isLoadingObjectives = true
   let id = null
   let objective = {}
-  let loadingObjective = true
   let practiceSessions = []
-  let loadingPracticeSessions = true
+  let isLoadingPracticeSessions = true
   let isEditing = false
 
   function toggleEdit() {
@@ -36,26 +38,25 @@
     setId(location)
 
     objective = {}
-    loadingObjective = true
 
     practiceSessions = []
-    loadingPracticeSessions = true
+    isLoadingPracticeSessions = true
   }
 
-  $: if (id) {
+  $: if (id && !isEmpty($objectives)) {
     objective = $objectives.find(obj => obj.id == id) || {}
-    loadingObjective = false
   }
 
   $: if (id) (async () => {
     practiceSessions = await fetchPracticeSessions(id)
-    loadingPracticeSessions = false
+    isLoadingPracticeSessions = false
   })()
 </script>
 
 <article>
   {#if id}
-    {#if loadingObjective}
+    {#if isLoadingObjectives}
+      <!-- TODO: Skeleton -->
       <p>Loading objective...</p>
     {:else if isEditing}
       <ObjectiveForm objective={objective} toggleEdit={toggleEdit} />
@@ -63,7 +64,7 @@
       <h1>{objective.name}</h1> 
       <button on:click={toggleEdit} type="button">Edit objective</button>
 
-      {#if loadingPracticeSessions}
+      {#if isLoadingPracticeSessions}
         <p>Loading practice sessions...</p>
       {:else}
         <ol>

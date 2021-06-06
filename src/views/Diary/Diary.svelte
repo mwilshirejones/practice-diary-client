@@ -10,12 +10,12 @@
   import { fetchObjectives } from './http/objectives'
   import { objectives } from './stores/objectives'
 
-  let loadingObjectives = true
+  let isLoadingObjectives = true
 
   onMount(async () => {
     const response = await fetchObjectives()
     objectives.addItems(response)
-    loadingObjectives = false
+    isLoadingObjectives = false
   })
 </script>
 
@@ -25,19 +25,15 @@
     <p>Inspiring quote lol</p>
   </Route>
 
-  {#if loadingObjectives}
-    <p>Loading objectives...</p>
-  {:else}
-    <Route contains="/diary/objective" let:location={location}>
-      <Objective location={location} />
-    </Route>
+  <Route contains="/diary/objective" let:location={location}>
+    <Objective location={location} isLoadingObjectives={isLoadingObjectives} />
+  </Route>
 
-    <Route contains="/diary/practice-session" let:location={location}>
-      <PracticeSession location={location} />
-    </Route>
+  <Route contains="/diary/practice-session" let:location={location}>
+    <PracticeSession location={location} />
+  </Route>
 
-    <ObjectivesNav />
-  {/if}
+  <ObjectivesNav class="sidebar" />
 </main>
 
 <style>
