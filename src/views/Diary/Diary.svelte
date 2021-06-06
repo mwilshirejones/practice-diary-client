@@ -6,6 +6,7 @@
   import Objective from './components/Objective'
   import ObjectivesNav from './components/ObjectivesNav'
   import PracticeSession from './components/PracticeSession'
+  import Welcome from './components/Welcome'
 
   import { fetchObjectives } from './http/objectives'
   import { objectives } from './stores/objectives'
@@ -20,9 +21,10 @@
 </script>
 
 <main>
+  <ObjectivesNav class="sidebar" />
+
   <Route match="/diary">
-    <h1>My practice diary</h1>
-    <p>Inspiring quote lol</p>
+    <Welcome />
   </Route>
 
   <Route contains="/diary/objective" let:location={location}>
@@ -32,10 +34,13 @@
   <Route contains="/diary/practice-session" let:location={location}>
     <PracticeSession location={location} />
   </Route>
-
-  <ObjectivesNav class="sidebar" />
 </main>
 
 <style>
+  main {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-gap: 2rem;
+  }
 </style>
 
