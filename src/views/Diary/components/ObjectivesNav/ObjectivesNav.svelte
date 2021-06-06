@@ -6,11 +6,11 @@
 <nav>
   <!-- TODO: Skeleton -->
   {#if $objectives.length}
-    <ul>
+    <ol>
       {#each $objectives as objective (objective.id)}
         <li><Link href={`/diary/objective/${objective.id}`}>{objective.name}</Link></li>  
       {/each}
-    </ul>
+    </ol>
   {/if}
 
   <Link href="/diary/objective">Create a new objective</Link>
