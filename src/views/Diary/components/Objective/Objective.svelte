@@ -53,33 +53,43 @@
   })()
 </script>
 
-<article>
+<article class="objective">
   {#if id}
     {#if isLoadingObjectives}
       <!-- TODO: Skeleton -->
       <p>Loading objective...</p>
-    {:else if isEditing}
-      <ObjectiveForm objective={objective} toggleEdit={toggleEdit} />
     {:else}
-      <h1>{objective.name}</h1> 
-      <button on:click={toggleEdit} type="button">Edit objective</button>
+      <section> 
+        {#if isEditing}
+          <ObjectiveForm objective={objective} toggleEdit={toggleEdit} />
+        {:else}
+          <h1>{objective.name}</h1> 
+          <button on:click={toggleEdit} type="button">Edit objective</button>
+        {/if}
+      </section>
 
-      {#if isLoadingPracticeSessions}
-        <p>Loading practice sessions...</p>
-      {:else}
-        <ol>
-          {#each practiceSessions as practiceSession (practiceSession.id)}
-            <li><Link href={`/diary/practice-session/${practiceSession.id}`}>{practiceSession.name}</Link></li>
-          {/each}
-        </ol>
-      {/if}
+      <section>
+        {#if isLoadingPracticeSessions}
+          <p>Loading practice sessions...</p>
+        {:else}
+          <ol>
+            {#each practiceSessions as practiceSession (practiceSession.id)}
+              <li><Link href={`/diary/practice-session/${practiceSession.id}`}>{practiceSession.name}</Link></li>
+            {/each}
+          </ol>
+        {/if}
+
+        <Link href="/diary/practice-session">Create a new practice session</Link>
+      </section>
     {/if}
-
-    <Link href="/diary/practice-session">Create a new practice session</Link>
   {:else}
     <ObjectiveForm />
   {/if}
 </article>
 
 <style>
+  .objective {
+    display: grid;
+    grid-gap: 2rem;
+  }
 </style>

@@ -40,19 +40,23 @@
 
 {#if isNew}
   <h1>Create a new objective</h1>
-{:else}
-  <h1>Edit objective</h1>
 {/if}
 
 <form on:submit|preventDefault={onSubmit}>
-  <input type="text" name="name" bind:value={values.name} />
+  <input class="field" type="text" name="name" bind:value={values.name} />
 
-  <button type="submit">{ saving ? 'Saving...' : 'Save objective' }</button>
+  <div>
+    <button type="submit">{ saving ? 'Saving...' : 'Save' }</button>
+
+    {#if !isNew}
+      <button on:click={toggleEdit} type="button">Cancel</button>
+    {/if}
+  </div>
 </form>
 
-{#if !isNew}
-  <button on:click={toggleEdit} type="button">Cancel</button>
-{/if}
-
 <style>
+  .field {
+    /* TODO: design tokens or watevr */
+    margin-bottom: 0.67rem;
+  }
 </style>

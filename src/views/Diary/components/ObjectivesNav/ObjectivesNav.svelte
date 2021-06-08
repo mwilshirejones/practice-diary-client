@@ -4,6 +4,8 @@
 </script>
 
 <nav>
+  <h2>Objectives</h2>
+
   <!-- TODO: Skeleton -->
   {#if $objectives.length}
     <ol>
