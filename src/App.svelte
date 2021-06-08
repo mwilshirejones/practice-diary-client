@@ -1,6 +1,4 @@
 <script>
-  import 'normalize-css/normalize.css'
-
   import Diary from './views/Diary'
   import Login from './views/Login'
   import { Router, Route } from './components/Router'
