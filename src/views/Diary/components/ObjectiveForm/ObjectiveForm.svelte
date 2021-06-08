@@ -56,7 +56,6 @@
 
 <style>
   .field {
-    /* TODO: design tokens or watevr */
-    margin-bottom: 0.67rem;
+    margin-bottom: var(--space-xs);
   }
 </style>

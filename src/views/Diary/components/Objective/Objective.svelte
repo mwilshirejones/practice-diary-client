@@ -90,6 +90,6 @@
 <style>
   .objective {
     display: grid;
-    grid-gap: 2rem;
+    grid-gap: var(--space-md);
   }
 </style>

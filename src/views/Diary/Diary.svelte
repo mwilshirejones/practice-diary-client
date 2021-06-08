@@ -40,7 +40,7 @@
   main {
     display: grid;
     grid-template-columns: 1fr 3fr;
-    grid-gap: 2rem;
+    grid-gap: var(--space-md);
   }
 </style>
 
