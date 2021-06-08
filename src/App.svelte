@@ -10,7 +10,7 @@
 </Router>
 
 <style global>
-  h1 {
+  *:first-child {
     margin-top: 0;
   }
 </style>
