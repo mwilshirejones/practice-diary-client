@@ -4,12 +4,13 @@
   "private": true,
   "scripts": {
     "build": "rollup -c",
-    "dev": "rollup -c -w",
+    "dev": "NODE_ENV=development rollup -c -w",
     "start": "sirv public --no-clear --single"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-node-resolve": "^11.0.0",
+    "@rollup/plugin-replace": "^2.4.2",
     "autoprefixer": "^10.2.6",
     "concat-files": "^0.1.1",
     "miragejs": "^0.1.41",

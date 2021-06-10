@@ -2,12 +2,14 @@ import svelte from 'rollup-plugin-svelte';
 import sveltePreprocess from 'svelte-preprocess'
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
+import replace from '@rollup/plugin-replace';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 import css from 'rollup-plugin-css-only';
-import bundleNormalizeCss from './rollup-plugins/bundle-normalize-css'
+import bundleNormalizeCss from './rollup-plugins/bundle-normalize-css';
 
 const production = !process.env.ROLLUP_WATCH;
+const mockReq = process.argv.includes('mockReq')
 
 function serve() {
 	let server;
@@ -57,6 +59,14 @@ export default {
 		// a separate file - better for performance
 		css({ output: 'bundle.css' }),
     bundleNormalizeCss({ target: 'public/build/bundle.css' }),
+
+    replace({
+      values: {
+        'env.NODE_ENV': JSON.stringify(production ? 'production' : 'development'),
+        'env.MOCK_REQ': JSON.stringify(!!mockReq),
+      },
+      preventAssignment: true,
+    }),
 
 		// If you have external dependencies installed from
 		// npm, you'll most likely need these plugins. In
