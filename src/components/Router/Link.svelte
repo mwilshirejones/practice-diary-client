@@ -1,14 +1,10 @@
 <script>
   import { onMount } from 'svelte'
-  import { location } from './store.js'
+  import { location } from './store'
+  import { goTo } from './helpers'
 
   export let href = ''
   let pathname = ''
-
-  const handleClick = () => {
-    location.update(loc => loc = pathname)
-    window.history.pushState({}, null, pathname)
-  }
 
   onMount(() => {
     if ($location === '/') {
@@ -21,4 +17,4 @@
   })
 </script>
 
-<a href={pathname} on:click|preventDefault={handleClick}><slot></slot></a>
+<a href={pathname} on:click|preventDefault={() => goTo(pathname)}><slot></slot></a>
