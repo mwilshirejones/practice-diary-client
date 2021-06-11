@@ -56,3 +56,15 @@ export async function patchObjective(objectiveId, data) {
   const objective = await response.json()
   return objective
 }
+
+export async function deleteObjective(objectiveId) {
+  const response = await fetch(
+    objectiveEndpoint(objectiveId),
+    { method: 'DELETE' }
+  )
+
+  if (!response.ok) throw new Error(response.status)
+
+  const objective = await response.json()
+  return objective
+}

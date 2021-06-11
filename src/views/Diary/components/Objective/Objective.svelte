@@ -5,6 +5,7 @@
   import { getUrlParams } from '../../../../components/Router/helpers.js'
 
   import { fetchPracticeSessions } from '../../http/practice-sessions'
+  import { deleteObjective as deleteObjectiveRequest } from '../../http/objectives'
   import { objectives } from '../../stores/objectives'
 
   import ObjectiveForm from '../ObjectiveForm'
@@ -16,6 +17,8 @@
   let practiceSessions = []
   let isLoadingPracticeSessions = true
   let isEditing = false
+  let isDeleting = false
+  let isDeleted = false
 
   function toggleEdit() {
     isEditing = !isEditing
@@ -32,6 +35,16 @@
     }
 
     id = lastParam
+  }
+
+  async function deleteObjective() {
+    isDeleting = true
+
+    await deleteObjectiveRequest(id)
+    objectives.deleteItem(id)
+
+    isDeleting = false
+    isDeleted = true
   }
 
   $: {
@@ -58,6 +71,8 @@
     {#if isLoadingObjectives}
       <!-- TODO: Skeleton -->
       <p>Loading objective...</p>
+    {:else if isDeleted}
+      <p>Objective successfully deleted!</p>
     {:else}
       <section> 
         {#if isEditing}
@@ -65,6 +80,7 @@
         {:else}
           <h1>{objective.name}</h1> 
           <button on:click={toggleEdit} type="button">Edit objective</button>
+          <button on:click={deleteObjective} type="button">{isDeleting ? 'Deleting...' : 'Delete objective'}</button>
         {/if}
       </section>
 

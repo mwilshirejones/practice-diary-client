@@ -5,12 +5,12 @@ function addObjectives(objectives, store) {
   return [...store, ...objectives]
 }
 
-function addObjective(objective, objectives) {
-  return [...objectives, objective]
+function addObjective(objective, store) {
+  return [...store, objective]
 }
 
-function updateObjective(objective, objectives) {
-  return objectives.map(obj => {
+function updateObjective(objective, store) {
+  return store.map(obj => {
     if (obj.id !== objective.id) return obj
 
     return {
@@ -18,6 +18,11 @@ function updateObjective(objective, objectives) {
       ...objective
     }
   })
+}
+
+function deleteObjective(objectiveId, store) {
+  // TODO: Should casting it to a string be necessary?
+  return store.filter(obj => obj.id.toString() !== objectiveId)
 }
 
 function createObjectivesStore() {
@@ -28,7 +33,7 @@ function createObjectivesStore() {
     addItems: objectives => update(store => addObjectives(objectives, store)),
     addItem: objective => update(store => addObjective(objective, store)),
     updateItem: objective => update(store => updateObjective(objective, store)),
-    // deleteItem: () => update(deleteObjective),
+    deleteItem: objectiveId => update(store => deleteObjective(objectiveId, store)),
   }
 }
 
