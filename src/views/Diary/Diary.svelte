@@ -21,7 +21,7 @@
 </script>
 
 <main>
-  <ObjectivesNav class="sidebar" />
+  <ObjectivesNav />
 
   <Route match="/diary">
     <Welcome />
