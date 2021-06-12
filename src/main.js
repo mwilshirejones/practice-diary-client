@@ -48,9 +48,7 @@ if (env.NODE_ENV === 'development' && env.MOCK_REQ) {
       this.get(
         '/objectives/:id',
         (_, request) => {
-          const objectiveIndex = objectives.map(o => o.id.toString()).indexOf(request.params.id)
-
-          return objectives[objectiveIndex]
+          return objectives.find(o => o.id.toString() === request.params.id)
         },
         { timing: 1000 },
       )
@@ -77,10 +75,14 @@ if (env.NODE_ENV === 'development' && env.MOCK_REQ) {
         },
       )
 
-      // TODO: Update to use dynamic segment for `:id`
       this.get(
-        '/objectives/1/practice_sessions',
-        () => practiceSessions.filter(practiceSession => practiceSession.objective_id === 1),
+        '/objectives/:id/practice_sessions',
+        (_, request) => {
+          const objectiveId = request.params.id
+          return practiceSessions.filter(
+            practiceSession => practiceSession.objective_id.toString() === objectiveId
+          )
+        },
         { timing: 1000 },
       )
 
