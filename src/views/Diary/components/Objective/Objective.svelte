@@ -2,110 +2,69 @@
   import isEmpty from 'lodash/isEmpty'
 
   import { Link } from '../../../../components/Router'
-  import { getUrlParams } from '../../../../components/Router/helpers.js'
 
-  import { fetchPracticeSessions } from '../../http/practice-sessions'
+  import { fetchPracticeSessions as fetchPracticeSessionsRequest } from '../../http/practice-sessions'
   import { deleteObjective as deleteObjectiveRequest } from '../../http/objectives'
   import { objectives } from '../../stores/objectives'
 
   import ObjectiveForm from '../ObjectiveForm'
+  import ObjectiveView from '../ObjectiveView'
+  import Resource from '../Resource'
 
   export let location = ''
   export let isLoadingObjectives = true
-  let id = null
-  let objective = {}
   let practiceSessions = []
   let isLoadingPracticeSessions = true
-  let isEditing = false
-  let isDeleting = false
-  let isDeleted = false
 
-  function toggleEdit() {
-    isEditing = !isEditing
-  }
-
-  function setId(loc) {
-    // TODO: Use named params somehow, e.g. /objective/:id
-    const urlParams = getUrlParams(loc)
-    const lastParam = urlParams[urlParams.length - 1]
-
-    if (lastParam === 'objective') {
-      id = null
-      return
-    }
-
-    id = lastParam
-  }
-
-  async function deleteObjective() {
-    isDeleting = true
-
+  async function deleteObjective(id) {
     await deleteObjectiveRequest(id)
     objectives.deleteItem(id)
+  }
 
-    isDeleting = false
-    isDeleted = true
+  async function fetchPracticeSessions(id) {
+    practiceSessions = await fetchPracticeSessionsRequest(id)
+    isLoadingPracticeSessions = false
   }
 
   $: {
-    setId(location)
-
-    objective = {}
-
     practiceSessions = []
     isLoadingPracticeSessions = true
   }
-
-  $: if (id && !isEmpty($objectives)) {
-    objective = $objectives.find(obj => obj.id == id) || {}
-  }
-
-  $: if (id) (async () => {
-    practiceSessions = await fetchPracticeSessions(id)
-    isLoadingPracticeSessions = false
-  })()
 </script>
 
 <article class="objective">
-  {#if id}
-    {#if isLoadingObjectives}
-      <!-- TODO: Skeleton -->
-      <p>Loading objective...</p>
-    {:else if isDeleted}
-      <p>Objective successfully deleted!</p>
-    {:else}
-      <section> 
-        {#if isEditing}
-          <ObjectiveForm objective={objective} toggleEdit={toggleEdit} />
-        {:else}
-          <h1>{objective.name}</h1> 
-          <button on:click={toggleEdit} type="button">Edit objective</button>
-          <button on:click={deleteObjective} type="button">{isDeleting ? 'Deleting...' : 'Delete objective'}</button>
-        {/if}
-      </section>
+  <Resource
+    resources={$objectives}
+    location={location}
+    isLoading={isLoadingObjectives}
+    resourceName="objective"
+    onDeleteResource={id => deleteObjective(id)}
+    onResourceLoaded={id => fetchPracticeSessions(id)}
+  >
+    <p slot="loading">Loading objective...</p>
+    <p slot="deleted">Objective successfully deleted!</p>
 
-      <section>
-        {#if isLoadingPracticeSessions}
-          <p>Loading practice sessions...</p>
-        {:else}
-          <ol>
-            {#each practiceSessions as practiceSession (practiceSession.id)}
-              <li><Link href={`/diary/practice-session/${practiceSession.id}`}>{practiceSession.name}</Link></li>
-            {/each}
-          </ol>
-        {/if}
+    <span slot="form" let:resource={resource} let:toggleEdit={toggleEdit}>
+      <ObjectiveForm objective={resource} toggleEdit={toggleEdit} />
+    </span>
 
-        <Link href="/diary/practice-session">Create a new practice session</Link>
-      </section>
-    {/if}
-  {:else}
-    <ObjectiveForm />
-  {/if}
+    <span slot="view" let:resource={resource}>
+      <ObjectiveView name={resource.name} />
+    </span> 
+
+    <span slot="footer">
+      <!-- FIXME: Show loading when switching objectives without reload. -->
+      {#if isLoadingPracticeSessions}
+        <p>Loading practice sessions...</p>
+      {:else}
+        <ol>
+          {#each practiceSessions as practiceSession (practiceSession.id)}
+            <li><Link href={`/diary/practice-session/${practiceSession.id}`}>{practiceSession.name}</Link></li>
+          {/each}
+        </ol>
+      {/if}
+
+      <Link href="/diary/practice-session">Create a new practice session</Link>
+    </span>
+  </Resource>
 </article>
-
-<style>
-  .objective {
-    display: grid;
-    grid-gap: var(--space-md);
-  }
-</style>
