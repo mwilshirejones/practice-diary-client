@@ -86,11 +86,12 @@ if (env.NODE_ENV === 'development' && env.MOCK_REQ) {
         { timing: 1000 },
       )
 
-      // TODO: Update to use dynamic segment for `:id`
       this.get(
-        '/objectives/2/practice_sessions',
-        () => {
-          return []
+        '/practice_sessions/:id',
+        (_, request) => {
+          return practiceSessions.find(
+            practiceSession => practiceSession.id.toString() === request.params.id
+          )
         },
         { timing: 1000 },
       )
