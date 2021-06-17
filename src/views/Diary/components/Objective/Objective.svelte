@@ -7,9 +7,10 @@
   import { deleteObjective as deleteObjectiveRequest } from '../../http/objectives'
   import { objectives } from '../../stores/objectives'
 
-  import ObjectiveForm from '../ObjectiveForm'
-  import ObjectiveView from '../ObjectiveView'
   import Resource from '../Resource'
+
+  import ObjectiveForm from './ObjectiveForm'
+  import ObjectiveView from './ObjectiveView'
 
   export let location = ''
   export let isLoadingObjectives = true

@@ -1,8 +1,8 @@
 <script>
   import isEmpty from 'lodash/isEmpty'
 
-  import { patchObjective, postObjective } from '../../http/objectives'
-  import { objectives } from '../../stores/objectives'
+  import { patchObjective, postObjective } from '../../../http/objectives'
+  import { objectives } from '../../../stores/objectives'
 
   export let objective = {}
   export let toggleEdit = null
@@ -12,7 +12,7 @@
   let onSubmit = null
   let values = { ...objective }
 
-  async function updateObjective({ target: form }) {
+  async function updateObjective() {
     const { id, ...restValues } = values
 
     saving = true
@@ -24,7 +24,7 @@
     toggleEdit()
   }
 
-  async function createObjective({ target: form }) {
+  async function createObjective() {
     saving = true
 
     const response = await postObjective(values)
