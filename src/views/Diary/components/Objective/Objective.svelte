@@ -3,8 +3,8 @@
 
   import { Link } from '../../../../components/Router'
 
-  import { fetchPracticeSessions as fetchPracticeSessionsRequest } from '../../http/practice-sessions'
-  import { deleteObjective as deleteObjectiveRequest } from '../../http/objectives'
+  import { fetchPracticeSessions as fetchPracticeSessionsRequest } from '../../api/practice-sessions'
+  import { deleteObjective as deleteObjectiveRequest } from '../../api/objectives'
   import { objectives } from '../../stores/objectives'
 
   import Resource from '../Resource'

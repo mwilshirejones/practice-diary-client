@@ -8,7 +8,7 @@
   import PracticeSession from './components/PracticeSession'
   import Welcome from './components/Welcome'
 
-  import { fetchObjectives } from './http/objectives'
+  import { fetchObjectives } from './api/objectives'
   import { objectives } from './stores/objectives'
 
   let isLoadingObjectives = true

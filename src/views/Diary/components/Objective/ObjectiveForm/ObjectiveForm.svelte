@@ -1,7 +1,7 @@
 <script>
   import isEmpty from 'lodash/isEmpty'
 
-  import { patchObjective, postObjective } from '../../../http/objectives'
+  import { patchObjective, postObjective } from '../../../api/objectives'
   import { objectives } from '../../../stores/objectives'
 
   export let objective = {}
