@@ -1,10 +1,10 @@
-let objectivesEndpoint = '/api/objectives'
-if (env.NODE_ENV === 'development' && !env.MOCK_REQ) objectivesEndpoint = `http://localhost:3000${objectivesEndpoint}`
+import { buildEndpoint } from '../helpers/http'
 
-const objectiveEndpoint = id => `${objectivesEndpoint}/${id}`
+const OBJECTIVES_ENDPOINT = buildEndpoint('objectives')
+const OBJECTIVE_ENDPOINT = id => `${OBJECTIVES_ENDPOINT}/${id}`
 
 export async function fetchObjectives() {
-  const response = await fetch(objectivesEndpoint)
+  const response = await fetch(OBJECTIVES_ENDPOINT)
 
   if (!response.ok) throw new Error(response.status)
 
@@ -13,7 +13,7 @@ export async function fetchObjectives() {
 }
 
 export async function fetchObjective(objectiveId) {
-  const response = await fetch(objectiveEndpoint(objectiveId))
+  const response = await fetch(OBJECTIVE_ENDPOINT(objectiveId))
 
   if (!response.ok) throw new Error(response.status)
 
@@ -23,7 +23,7 @@ export async function fetchObjective(objectiveId) {
 
 export async function postObjective(data) {
   const response = await fetch(
-    objectivesEndpoint,
+    OBJECTIVES_ENDPOINT(),
     {
       method: 'POST',
       headers: {
@@ -41,7 +41,7 @@ export async function postObjective(data) {
 
 export async function patchObjective(objectiveId, data) {
   const response = await fetch(
-    objectiveEndpoint(objectiveId),
+    OBJECTIVE_ENDPOINT(objectiveId),
     {
       method: 'PATCH',
       headers: {
@@ -59,7 +59,7 @@ export async function patchObjective(objectiveId, data) {
 
 export async function deleteObjective(objectiveId) {
   const response = await fetch(
-    objectiveEndpoint(objectiveId),
+    OBJECTIVE_ENDPOINT(objectiveId),
     { method: 'DELETE' }
   )
 
